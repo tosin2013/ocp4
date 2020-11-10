@@ -10,11 +10,6 @@ variable "cluster_slug" {
   default = "ocp46"
 }
 
-variable "datastore_name" {
-  type    = string
-  default = "datastore"
-}
-
 # Change domain name to your own
 variable "domain_name" {
   type    = string
@@ -143,8 +138,8 @@ variable "gateway" {
   type = string
 }
 
-variable "dns_addresses" {
-  type = list(string)
+variable "dns_address" {
+  type = string
 }
 
 variable "netmask" {

@@ -3,7 +3,7 @@ module "master" {
   count     = length(var.master_ips)
   name      = "${var.cluster_slug}-master${count.index + 1}"
   folder    = "${var.cluster_slug}"
-  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
+  datastore = data.vsphere_datastore.changeme.id
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -17,10 +17,10 @@ module "master" {
   network      = data.vsphere_network.network.id
   adapter_type = data.vsphere_virtual_machine.template.network_interface_types[0]
 
-  domain_name    = var.domain_name
+  #domain_name    = var.domain_name
   cluster_domain = var.cluster_domain
   machine_cidr   = var.machine_cidr
-  dns_addresses  = var.dns_addresses
+  dns_address  = var.dns_address
   gateway        = var.gateway
   ipv4_address   = var.master_ips[count.index]
   netmask        = var.netmask
@@ -31,7 +31,7 @@ module "worker" {
   count     = length(var.worker_ips)
   name      = "${var.cluster_slug}-worker${count.index + 1}"
   folder    = "${var.cluster_slug}"
-  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
+  datastore = data.vsphere_datastore.changeme.id
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -45,10 +45,10 @@ module "worker" {
   network      = data.vsphere_network.network.id
   adapter_type = data.vsphere_virtual_machine.template.network_interface_types[0]
 
-  domain_name    = var.domain_name
+  #domain_name    = var.domain_name
   cluster_domain = var.cluster_domain
   machine_cidr   = var.machine_cidr
-  dns_addresses  = var.dns_addresses
+  dns_address  = var.dns_address
   gateway        = var.gateway
   ipv4_address   = var.worker_ips[count.index]
   netmask        = var.netmask
@@ -59,7 +59,7 @@ module "bootstrap" {
   count     = "${var.bootstrap_complete ? 0 : 1}"
   name      = "${var.cluster_slug}-bootstrap"
   folder    = "${var.cluster_slug}"
-  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
+  datastore = data.vsphere_datastore.changeme.id
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -73,10 +73,10 @@ module "bootstrap" {
   network      = data.vsphere_network.network.id
   adapter_type = data.vsphere_virtual_machine.template.network_interface_types[0]
 
-  domain_name    = var.domain_name
+  #domain_name    = var.domain_name
   cluster_domain = var.cluster_domain
   machine_cidr   = var.machine_cidr
-  dns_addresses  = var.dns_addresses
+  dns_address  = var.dns_address
   gateway        = var.gateway
   ipv4_address   = var.bootstrap_ip
   netmask        = var.netmask
@@ -99,7 +99,7 @@ module "bootstrap" {
 #  count     = 1
 #  name      = "${var.cluster_slug}-lb"
 #  folder    = "${var.cluster_slug}"
-#  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
+#  datastore = data.vsphere_datastore.changeme.id
 #  disk_size = 16
 #  memory    = 1024
 #  num_cpu   = 2
@@ -116,7 +116,7 @@ module "bootstrap" {
 #  domain_name    = var.domain_name
 #  cluster_domain = var.cluster_domain
 #  machine_cidr   = var.machine_cidr
-#  dns_addresses  = var.dns_addresses
+#  dns_address  = var.dns_address
 #  gateway        = var.gateway
 #  ipv4_address   = var.loadbalancer_ip
 #  netmask        = var.netmask
