@@ -52,11 +52,11 @@ sshKey: 'YOUR_SSH_PUBKEY'
 ```
 
 3. Customize `clusters/4.6-staticIPs/terraform.tfvars`, `clusters/4.6-staticIPs/main.tf`, and `clusters/4.6-staticIPs/variables.tf` with the relevant information. This repo assume you are doing mac address based DHCP reservations.
-
-4. Run `make tfinit` to initialise Terraform modules
-5. Run `make create` to create the VMs and generate/install ignition configs
-6. Monitor install progress with `make wait-for-bootstrap`
-7. Check and approve pending CSRs with `make get-csr` and `make approve-csr`
-8. Run `make bootstrap-complete` to destroy the bootstrap VM
-9. Run `make wait-for-install` and wait for the cluster install to complete
-10. Enjoy!
+4. Configure folder on Vmware using the output name from `jq -r .infraID <installation_directory>/metadata.json`
+5. Run `make tfinit` to initialise Terraform modules
+6. Run `make create` to create the VMs and generate/install ignition configs
+7. Monitor install progress with `make wait-for-bootstrap`
+8. Check and approve pending CSRs with `make get-csr` and `make approve-csr`
+9. Run `make bootstrap-complete` to destroy the bootstrap VM
+10. Run `make wait-for-install` and wait for the cluster install to complete
+11. Enjoy!
