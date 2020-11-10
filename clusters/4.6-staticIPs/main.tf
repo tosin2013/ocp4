@@ -3,7 +3,7 @@ module "master" {
   count     = length(var.master_ips)
   name      = "${var.cluster_slug}-master${count.index + 1}"
   folder    = "${var.cluster_slug}"
-  datastore = data.vsphere_datastore.${var.datastore_name}.id
+  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -31,7 +31,7 @@ module "worker" {
   count     = length(var.worker_ips)
   name      = "${var.cluster_slug}-worker${count.index + 1}"
   folder    = "${var.cluster_slug}"
-  datastore = data.vsphere_datastore.${var.datastore_name}.id
+  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -59,7 +59,7 @@ module "bootstrap" {
   count     = "${var.bootstrap_complete ? 0 : 1}"
   name      = "${var.cluster_slug}-bootstrap"
   folder    = "${var.cluster_slug}"
-  datastore = data.vsphere_datastore.${var.datastore_name}.id
+  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -79,7 +79,12 @@ module "bootstrap" {
   dns_addresses  = var.dns_addresses
   gateway        = var.gateway
   ipv4_address   = var.bootstrap_ip
-  netmask        = var.netmask12
+  netmask        = var.netmask
+}
+
+# still testing load balancer on coreos
+# module "lb" {
+#  source = "../../modules/lb"
 #  ssh_key_file  = [file("~/.ssh/changeme.pub")]
 # lb_ip_address = var.loadbalancer_ip
 #  api_backend_addresses = flatten([
@@ -94,7 +99,7 @@ module "bootstrap" {
 #  count     = 1
 #  name      = "${var.cluster_slug}-lb"
 #  folder    = "${var.cluster_slug}"
-#  datastore = data.vsphere_datastore.${var.datastore_name}.id
+#  datastore = "data.vsphere_datastore.${var.datastore_name}.id"
 #  disk_size = 16
 #  memory    = 1024
 #  num_cpu   = 2
