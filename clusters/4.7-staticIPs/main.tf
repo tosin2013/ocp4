@@ -3,7 +3,7 @@ module "master" {
   count     = length(var.master_ips)
   name      = "${var.cluster_slug}-master${count.index + 1}"
   folder    = "${var.cluster_slug}"
-  datastore = data.vsphere_datastore.changeme.id
+  datastore = data.vsphere_datastore.datastore_name.id
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -31,7 +31,7 @@ module "worker" {
   count     = length(var.worker_ips)
   name      = "${var.cluster_slug}-worker${count.index + 1}"
   folder    = "${var.cluster_slug}"
-  datastore = data.vsphere_datastore.changeme.id
+  datastore = data.vsphere_datastore.datastore_name.id
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -59,7 +59,7 @@ module "bootstrap" {
   count     = "${var.bootstrap_complete ? 0 : 1}"
   name      = "${var.cluster_slug}-bootstrap"
   folder    = "${var.cluster_slug}"
-  datastore = data.vsphere_datastore.changeme.id
+  datastore = data.vsphere_datastore.datastore_name.id
   disk_size = 120
   memory    = 16384
   num_cpu   = 4
@@ -99,7 +99,7 @@ module "bootstrap" {
 #  count     = 1
 #  name      = "${var.cluster_slug}-lb"
 #  folder    = "${var.cluster_slug}"
-#  datastore = data.vsphere_datastore.changeme.id
+#  datastore = data.vsphere_datastore.datastore_name.id
 #  disk_size = 16
 #  memory    = 1024
 #  num_cpu   = 2
