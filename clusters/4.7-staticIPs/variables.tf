@@ -42,7 +42,7 @@ variable "ignition" {
 ## VMware templates to clone
 
 data "vsphere_virtual_machine" "template" {
-  name          = "rhcos-4.6.1"
+  name          = "rhcos-4.7.0"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -73,9 +73,9 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
-# change nvme500 to your datastore name
-data "vsphere_datastore" "nvme500" {
-  name          = "nvme500"
+# change changeme to your datastore name
+data "vsphere_datastore" "datastore_name" {
+  name          = "changeme"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 

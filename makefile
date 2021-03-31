@@ -2,11 +2,12 @@ tfinit:
 	cd clusters/4.5; terraform init
 	cd clusters/4.5-staticIPs; terraform init
 	cd clusters/4.6-staticIPs; terraform init
+	cd clusters/4.7-staticIPs; terraform init
 
 create:
 	mkdir openshift/; cp generate-configs.sh openshift/
 	cd openshift/; ./generate-configs.sh
-	cd clusters/4.5; terraform apply -auto-approve
+	cd clusters/4.7-staticIPs; terraform apply -auto-approve
 
 static45:
 	./generate-configs.sh
@@ -26,7 +27,7 @@ remove-bootstrap:
 	cd clusters/4.5; terraform apply -auto-approve -var 'bootstrap_complete=true'
 
 wait-for-bootstrap:
-	cd openshift; openshift-install wait-for install-complete --log-level debug
+	cd openshift; openshift-install wait-for bootstrap-complete --log-level debug
 
 wait-for-install:
 	cd openshift; openshift-install wait-for install-complete --log-level debug
@@ -59,4 +60,4 @@ approve-csr:
 		xargs oc --kubeconfig openshift/auth/kubeconfig adm certificate approve
 
 import-ova:
-	govc import.ova --folder=templates --ds=spc500 --name=rhcos-4.6.1 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.6/4.6.1/rhcos-vmware.x86_64.ova
+	 govc import.ova --folder=template-folder --ds=datastorename --name=rhcos-4.7.0 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-vmware.x86_64.ova

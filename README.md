@@ -11,6 +11,22 @@ Code for each OCP release lives on a numbered branch. The master branch represen
 > * This repo *requires* [Terraform 0.13](https://www.terraform.io/downloads.html)
 > * Install `oc tools` with `./install-oc-tools.sh --latest 4.7`
 > * This code use yamldecode - details here https://blog.ktz.me/store-terraform-secrets-in-yaml-files-with-yamldecode/
+> install govc
+
+### Install Govc
+```
+$ curl -L   https://github.com/vmware/govmomi/releases/download/v0.24.0/govc_linux_amd64.gz  | gunzip > /usr/local/bin/govc
+$ chmod +x /usr/local/bin/govc
+```
+
+### Import OVA template 
+```
+# Create ocp4-476wz and rhcos-4.7.0  tempalte folder and 
+$ export GOVC_URL=https://vmware_endpoint/sdk
+$ export GOVC_USERNAME=administrator@vsphere.local
+$ export GOVC_PASSWORD="vsphere-password"
+$ govc import.ova --folder=template --ds=datastore2 --name=rhcos-4.7.0 https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/latest/latest/rhcos-vmware.x86_64.ova
+```
 
 0. Create `~/.config/ocp/vsphere.yaml` for `yamldecode` use, sample content:
 
@@ -51,7 +67,7 @@ pullSecret: 'YOUR_PULL_SECRET'
 sshKey: 'YOUR_SSH_PUBKEY'
 ```
 
-3. Customize `clusters/4.6-staticIPs/terraform.tfvars`, `clusters/4.6-staticIPs/main.tf`, and `clusters/4.6-staticIPs/variables.tf` with the relevant information. This repo assume you are doing mac address based DHCP reservations.
+3. Customize `clusters/4.7-staticIPs/terraform.tfvars`, `clusters/4.7-staticIPs/main.tf`, and `clusters/4.7-staticIPs/variables.tf` with the relevant information. This repo assume you are doing mac address based DHCP reservations.
 4. Configure folder on Vmware using the output name from `jq -r .infraID <installation_directory>/metadata.json`
 5. Run `make tfinit` to initialise Terraform modules
 6. Run `make create` to create the VMs and generate/install ignition configs
